@@ -4,7 +4,7 @@ import Login from '../components/auth/Login'
 
 export default function LoginScreen({navigation}) {
   return (
-    <Login />
+    <Login navigation={navigation}/>
   )
 }
 
