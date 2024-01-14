@@ -1,21 +1,26 @@
-import { Text, View, Image, TouchableOpacity } from "react-native";
+import { Text, View, Image, TouchableOpacity, FlatList } from "react-native";
 import React from "react";
 import Input from "../shared/Input";
 import Button from "../shared/Button";
+import { loginForm } from "../../utils/const/authForm";
 
-export default function Login({ navigation}) {
+export default function Login({ navigation }) {
   return (
     <View className="flex-1 items-center justify-center bg-white px-5">
       <View>
         <Image source={require("../../../assets/images/auth-logo.png")} />
       </View>
 
-      <View className="w-full mt-5">
-        <Input title="E-Mail Adresi" />
-      </View>
-
-      <View className="w-full mt-5">
-        <Input title="Şifre" />
+      <View className="w-full">
+        <FlatList
+          data={loginForm}
+          renderItem={({ item }) => (
+            <View className="w-full mt-5">
+              <Input title={item.title} icon={item.icon} />
+            </View>
+          )}
+          keyExtractor={(item) => item.id}
+        />
       </View>
 
       <View className="w-full mt-5">
