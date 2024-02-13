@@ -1,19 +1,21 @@
 import { Text, View, TextInput, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setUserValidationInput } from "../../redux/userSlice";
 
 export default function Input({
   item: { title, icon, secureIcon, isSecure = false, type },
-  formInfo,
-  setFormInfo,
 }) {
+  const user = useSelector((state) => state.user);
   const [isVisible, setIsVisible] = useState(false);
+  const dispatch = useDispatch();
 
   const handleChangeIsVisible = () => {
     setIsVisible(!isVisible);
   };
 
-  const changeFormInfo = (name, text) => {
-    setFormInfo((prevList) => ({ ...prevList, [name]: text }));
+  const changeFormInfo = (type, value) => {
+    dispatch(setUserValidationInput({ type, value }));
   };
 
   return isSecure ? (
@@ -24,7 +26,7 @@ export default function Input({
         placeholder={title}
         secureTextEntry={!isVisible}
         onChangeText={(value) => changeFormInfo(type, value)}
-        value={formInfo[type]}
+        value={user[type]}
       />
       <Text className="text-[11px] text-primary absolute top-[-8px] left-[10px] bg-white px-[10px] border-l-[1px] border-r-[1px] border-border">
         {title}
@@ -43,7 +45,7 @@ export default function Input({
         className="h-full px-[37px] text-[13px]"
         placeholder={title}
         onChangeText={(value) => changeFormInfo(type, value)}
-        value={formInfo[type]}
+        value={user[type]}
       />
       <Text className="text-[11px] text-primary absolute top-[-8px] left-[10px] bg-white px-[10px] border-l-[1px] border-r-[1px] border-border">
         {title}
