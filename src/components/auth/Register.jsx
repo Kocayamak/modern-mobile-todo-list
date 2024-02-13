@@ -1,10 +1,20 @@
 import { View, Image, TouchableOpacity, FlatList, Text } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../shared/Button";
 import Input from "../shared/Input";
 import { registerForm } from "../../utils/const/authForm";
 
 export default function Register({ navigation }) {
+  const [formInfo, setFormInfo] = useState({
+    name: "",
+    surname: "",
+    email: "",
+    password: "",
+    rpassword: "",
+  });
+
+  useEffect(() => { console.log(formInfo) }, [formInfo]);
+
   return (
     <View className="flex-1 items-center justify-center bg-white px-5">
       <View>
@@ -16,7 +26,7 @@ export default function Register({ navigation }) {
           data={registerForm}
           renderItem={({ item }) => (
             <View className="w-full mt-5">
-              <Input item={item} />
+              <Input item={item} formInfo={formInfo} setFormInfo={setFormInfo}/>
             </View>
           )}
           keyExtractor={(item) => item.id}
